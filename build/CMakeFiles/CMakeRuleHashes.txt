@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+fea88fc2dfb6dfef54c3e8b4c2f5c04c CMakeFiles/QtScreenCapture_autogen

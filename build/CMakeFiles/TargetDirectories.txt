@@ -1,0 +1,4 @@
+/home/ubuntu/QtScreenCaptureProject/build/CMakeFiles/QtScreenCapture.dir
+/home/ubuntu/QtScreenCaptureProject/build/CMakeFiles/edit_cache.dir
+/home/ubuntu/QtScreenCaptureProject/build/CMakeFiles/rebuild_cache.dir
+/home/ubuntu/QtScreenCaptureProject/build/CMakeFiles/QtScreenCapture_autogen.dir
