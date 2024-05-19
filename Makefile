@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = Screencappa1.0.0
 DISTDIR = /home/ubuntu/QtScreenCaptureProject/.tmp/Screencappa1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -L/home/ubuntu/QtScreenCaptureProject/opencv/build/lib -lopencv_core -lopencv_imgproc -lopencv_highgui /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) -L/home/ubuntu/QtScreenCaptureProject/opencv/build/lib -lopencv_core -lopencv_imgproc -lopencv_highgui `pkg-config --libs opencv4` /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -54,10 +54,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = src/main.cpp \
 		src/screencapture.cpp \
-		src/imageprocessor.cpp 
+		src/imageprocessor.cpp moc_screencapture.cpp \
+		moc_imageprocessor.cpp
 OBJECTS       = main.o \
 		screencapture.o \
-		imageprocessor.o
+		imageprocessor.o \
+		moc_screencapture.o \
+		moc_imageprocessor.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -356,8 +359,19 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_screencapture.cpp moc_imageprocessor.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_screencapture.cpp moc_imageprocessor.cpp
+moc_screencapture.cpp: src/screencapture.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ubuntu/QtScreenCaptureProject/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ubuntu/QtScreenCaptureProject -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/screencapture.h -o moc_screencapture.cpp
+
+moc_imageprocessor.cpp: src/imageprocessor.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ubuntu/QtScreenCaptureProject/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/ubuntu/QtScreenCaptureProject -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/imageprocessor.h -o moc_imageprocessor.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -375,18 +389,24 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_uic_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
 main.o: src/main.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
-screencapture.o: src/screencapture.cpp 
+screencapture.o: src/screencapture.cpp src/screencapture.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o screencapture.o src/screencapture.cpp
 
-imageprocessor.o: src/imageprocessor.cpp 
+imageprocessor.o: src/imageprocessor.cpp src/imageprocessor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imageprocessor.o src/imageprocessor.cpp
+
+moc_screencapture.o: moc_screencapture.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_screencapture.o moc_screencapture.cpp
+
+moc_imageprocessor.o: moc_imageprocessor.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_imageprocessor.o moc_imageprocessor.cpp
 
 ####### Install
 
