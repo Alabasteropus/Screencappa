@@ -534,8 +534,24 @@ CMakeFiles/QtScreenCapture.dir/src/main.cpp.o: ../src/main.cpp \
   /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
   /usr/include/opencv4/opencv2/video.hpp \
   /usr/include/opencv4/opencv2/video/tracking.hpp \
-  /usr/include/opencv4/opencv2/video/background_segm.hpp
+  /usr/include/opencv4/opencv2/video/background_segm.hpp \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QVBoxLayout \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qboxlayout.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlayout.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlayoutitem.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qboxlayout.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qgridlayout.h
 
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlayoutitem.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h:
 
 /usr/include/opencv4/opencv2/video/background_segm.hpp:
 
@@ -596,6 +612,8 @@ CMakeFiles/QtScreenCapture.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/opencv4/opencv2/flann/any.h:
 
 /usr/include/opencv4/opencv2/flann/params.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qgridlayout.h:
 
 /usr/include/opencv4/opencv2/flann/index_testing.h:
 
@@ -684,6 +702,8 @@ CMakeFiles/QtScreenCapture.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
 /usr/include/opencv4/opencv2/core/base.hpp:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h:
 
@@ -829,6 +849,8 @@ CMakeFiles/QtScreenCapture.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject_impl.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QVBoxLayout:
+
 /usr/include/c++/11/bits/stl_multimap.h:
 
 /usr/include/c++/11/bits/stl_map.h:
@@ -892,6 +914,8 @@ CMakeFiles/QtScreenCapture.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/opencv4/opencv2/core/cvdef.h:
 
 /usr/include/c++/11/bits/uses_allocator.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qboxlayout.h:
 
 /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp:
 
@@ -1204,6 +1228,8 @@ QtScreenCapture_autogen/mocs_compilation.cpp:
 /usr/include/c++/11/cstddef:
 
 /usr/include/c++/11/bits/stl_vector.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlayout.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h:
 
