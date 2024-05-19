@@ -56,7 +56,7 @@ cv::Mat processImage(const QPixmap &originalPixmap) {
         // Crop operation
         // Define a region of interest for cropping the image
         // The region is defined by the top-left corner (x, y) and the width and height of the region
-        cv::Rect roi(10, 10, 100, 100);
+        static cv::Rect roi(10, 10, 100, 100); // Made static to avoid redefinition if ROI doesn't change often
         cv::Mat croppedMat = originalMat(roi); // Crop the image based on the region of interest
 
         // Reposition operation (translation)
