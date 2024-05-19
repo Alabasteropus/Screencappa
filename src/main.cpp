@@ -60,18 +60,30 @@ cv::Mat processImage(const QPixmap &originalPixmap) {
         // Crop operation
         // Define a region of interest for cropping the image
         // The region is defined by the top-left corner (x, y) and the width and height of the region
-        static cv::Rect roi(10, 10, 100, 100); // Made static to avoid redefinition if ROI doesn't change often
-        cv::Mat croppedMat = originalMat(roi); // Crop the image based on the region of interest
+        // These values can be set dynamically based on user input or screen resolution
+        int roi_x = 10; // Placeholder for dynamic x-coordinate
+        int roi_y = 10; // Placeholder for dynamic y-coordinate
+        int roi_width = std::min(100, originalMat.cols - roi_x); // Ensure ROI width does not exceed image bounds
+        int roi_height = std::min(100, originalMat.rows - roi_y); // Ensure ROI height does not exceed image bounds
+        cv::Rect roi(roi_x, roi_y, roi_width, roi_height);
+        if (roi.x >= 0 && roi.y >= 0 && roi.width > 0 && roi.height > 0 &&
+            roi.x + roi.width <= originalMat.cols && roi.y + roi.height <= originalMat.rows) {
+            cv::Mat croppedMat = originalMat(roi); // Crop the image based on the region of interest
 
-        // Reposition operation (translation)
-        // Translate the image 50 pixels to the right and 50 pixels down
-        // This is achieved by creating a transformation matrix and applying it to the cropped image
-        cv::Mat repositionedMat;
-        cv::Mat translationMatrix = (cv::Mat_<double>(2,3) << 1, 0, 50, 0, 1, 50);
-        cv::warpAffine(croppedMat, repositionedMat, translationMatrix, croppedMat.size());
+            // Reposition operation (translation)
+            // Translate the image based on user input or other criteria
+            int translate_x = 50; // Placeholder for dynamic x translation
+            int translate_y = 50; // Placeholder for dynamic y translation
+            cv::Mat repositionedMat;
+            cv::Mat translationMatrix = (cv::Mat_<double>(2,3) << 1, 0, translate_x, 0, 1, translate_y);
+            cv::warpAffine(croppedMat, repositionedMat, translationMatrix, croppedMat.size());
 
-        qDebug() << "Processing complete.";
-        return repositionedMat;
+            qDebug() << "Processing complete.";
+            return repositionedMat;
+        } else {
+            qDebug() << "Invalid ROI. Processing skipped.";
+            return cv::Mat();
+        }
     } else {
         qDebug() << "Input QPixmap is empty. Returning an empty cv::Mat.";
         return cv::Mat();
