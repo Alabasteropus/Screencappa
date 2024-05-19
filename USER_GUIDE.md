@@ -45,6 +45,10 @@ Before installing Screencappa, ensure the following dependencies are installed:
 - Drag the edges of the floating window to resize the cloned capture.
 - Click and drag the window to reposition it on your screen.
 
+### Dynamic Resizing and Configurable Cropping
+- The captured image can be dynamically resized before processing. To adjust the resolution, navigate to the settings and specify your desired dimensions.
+- To set a specific region of interest (ROI) for cropping, use the selection tool to define the area on the captured image.
+
 ### Click-through Functionality
 - The floating window is click-through by default, allowing you to interact with applications underneath.
 
