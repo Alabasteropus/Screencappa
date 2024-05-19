@@ -3,14 +3,14 @@ TARGET = Screencappa
 INCLUDEPATH += $$PWD/include
 
 # Input
-SOURCES += main.cpp \
-           screencapture.cpp \
-           imageprocessor.cpp
+SOURCES += src/main.cpp \
+           src/screencapture.cpp \
+           src/imageprocessor.cpp
 
-HEADERS += screencapture.h \
-           imageprocessor.h
+HEADERS += src/screencapture.h \
+           src/imageprocessor.h
 
-FORMS += mainwindow.ui
+FORMS += src/mainwindow.ui
 
 # Use the OpenCV library
 LIBS += -L$$PWD/opencv/build/lib -lopencv_core -lopencv_imgproc -lopencv_highgui
