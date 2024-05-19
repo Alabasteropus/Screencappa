@@ -52,6 +52,17 @@ Before installing Screencappa, ensure the following dependencies are installed:
 ### Click-through Functionality
 - The floating window is click-through by default, allowing you to interact with applications underneath.
 
+## Testing Screencappa
+
+To ensure that Screencappa is functioning correctly on your system, follow these steps:
+
+1. After installation, open Screencappa and attempt to capture a screenshot using the 'Capture' button or the hotkey `Ctrl+Shift+S`.
+2. Verify that the screenshot is saved to the specified location and that the image is correct.
+3. Test the cloning and cropping features by selecting an area of the screen and using the 'Clone' and 'Crop' options.
+4. Resize and reposition the floating window to ensure these functionalities work as expected.
+5. Confirm the click-through functionality by attempting to interact with windows or applications behind the floating window.
+6. If any issues arise during these tests, refer to the troubleshooting section below or open an issue on the GitHub repository.
+
 ## Troubleshooting
 
 If you encounter any issues during installation or usage, please refer to the following tips:
