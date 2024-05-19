@@ -45,8 +45,7 @@ QPixmap captureScreen() {
  */
 cv::Mat processImage(const QPixmap &originalPixmap) {
     // Convert QPixmap to QImage then to OpenCV Mat
-    // Resizing the image right after capture for performance optimization
-    QImage originalImage = originalPixmap.toImage().scaled(640, 480, Qt::KeepAspectRatio, Qt::FastTransformation);
+    QImage originalImage = originalPixmap.toImage();
     cv::Mat originalMat = cv::Mat(originalImage.height(), originalImage.width(),
                                   CV_8UC4, const_cast<uchar*>(originalImage.bits()), originalImage.bytesPerLine());
 
