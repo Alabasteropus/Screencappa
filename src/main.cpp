@@ -6,6 +6,10 @@
 #include <opencv2/opencv.hpp>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QShortcut>
+#include <QKeySequence>
+#include <QDir>
+#include <QDateTime>
 
 /**
  * @file main.cpp
@@ -119,13 +123,41 @@ void setupUI(const cv::Mat &processedImage) {
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
+    // Define the default save location for screenshots
+    QString savePath = QDir::homePath() + "/Screenshots";
+    QDir().mkpath(savePath); // Create the directory if it does not exist
+
+    // Create a main window to act as a parent for the shortcut
+    QWidget mainWindow;
+    mainWindow.resize(0, 0); // Make the main window invisible
+
+    // Set up the hotkey for screen capture
+    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+Shift+S"), &mainWindow);
+    QObject::connect(shortcut, &QShortcut::activated, [&]() {
+        QPixmap originalPixmap = captureScreen();
+        if (!originalPixmap.isNull()) {
+            cv::Mat processedImage = processImage(originalPixmap);
+            setupUI(processedImage);
+            // Save the screenshot to the default location
+            QString filePath = savePath + "/screenshot_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".png";
+            originalPixmap.save(filePath);
+            qDebug() << "Screenshot saved to:" << filePath;
+        } else {
+            qDebug() << "Failed to capture screen.";
+        }
+    });
+
+    // Temporary code to test screenshot functionality on startup
     QPixmap originalPixmap = captureScreen();
     if (!originalPixmap.isNull()) {
         cv::Mat processedImage = processImage(originalPixmap);
         setupUI(processedImage);
+        // Save the screenshot to the default location
+        QString filePath = savePath + "/screenshot_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".png";
+        originalPixmap.save(filePath);
+        qDebug() << "Screenshot saved to:" << filePath;
     } else {
-        qDebug() << "Failed to capture screen. Application will exit.";
-        return -1;
+        qDebug() << "Failed to capture screen.";
     }
 
     return app.exec();
