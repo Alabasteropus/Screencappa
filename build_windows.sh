@@ -15,12 +15,16 @@ export PKG_CONFIG_PATH="$OPENCV_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
 mkdir -p build-windows
 cd build-windows
 
-# Use the qmake executable found in the system
-QMAKE_EXECUTABLE="/usr/bin/qmake"
+# Placeholder for the qmake executable path, to be updated after Qt build completion
+QMAKE_EXECUTABLE=""
 
-# Check if qmake executable is found
-if [ ! -f "$QMAKE_EXECUTABLE" ]; then
-    echo "qmake executable not found, please check your Qt installation."
+# Check for the MinGW-w64 qmake executable in the expected directory
+if [ -f "/usr/local/Qt-5.15.3/bin/qmake" ]; then
+    QMAKE_EXECUTABLE="/usr/local/Qt-5.15.3/bin/qmake"
+elif [ -f "/usr/bin/x86_64-w64-mingw32-qmake" ]; then
+    QMAKE_EXECUTABLE="/usr/bin/x86_64-w64-mingw32-qmake"
+else
+    echo "MinGW-w64 qmake executable not found, please check your Qt installation."
     exit 1
 fi
 
