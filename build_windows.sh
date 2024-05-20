@@ -29,10 +29,25 @@ fi
 
 # The windeployqt tool is not available on Linux, so it is removed from the script.
 # Instead, manually collect all necessary Qt libraries and plugins for the Windows executable to run.
-# TODO: Ensure that all required Qt libraries and plugins are included in the zip file.
+# TODO: Identify and copy the necessary Qt libraries and plugins to the build-windows directory.
+
+# Navigate to the directory containing the Windows executable
+cd release # Assuming the executable is in the 'release' directory
+
+# Verify that the Screencappa executable exists
+if [ ! -f Screencappa.exe ]; then
+    echo "Screencappa.exe not found, exiting..."
+    exit 1
+fi
+
+# Create a directory to collect all necessary files for distribution
+mkdir -p Screencappa-dist
+cp Screencappa.exe Screencappa-dist/
+
+# TODO: Copy the necessary Qt libraries and plugins to the Screencappa-dist directory
 
 # Create a zip file for distribution
 # Ensure that the Windows executable and all required Qt libraries and plugins are present before zipping
-zip Screencappa.zip Screencappa.exe # Add other required files as needed
+zip -r Screencappa.zip Screencappa-dist/
 
 echo "Packaging complete. The Screencappa.zip file is ready for distribution."
