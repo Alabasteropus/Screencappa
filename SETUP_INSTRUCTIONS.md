@@ -29,7 +29,7 @@
    ```
 4. Compile the project using the following command:
    ```
-   mingw32-make
+   make
    ```
 
 ## Running the Application
