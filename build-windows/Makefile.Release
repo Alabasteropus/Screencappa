@@ -15,12 +15,12 @@ CC            = /usr/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-gcc
 CXX           = /usr/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -pipe -fno-keep-inline-dllexport -O2 -Wall -Wextra -Wextra $(DEFINES)
-CXXFLAGS      = -pipe -fno-keep-inline-dllexport -O2 -std=gnu++11 -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I../../QtScreenCaptureProject -I. -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/x86_64-w64-mingw32/qt5/include -I/usr/x86_64-w64-mingw32/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -Irelease -I. -I/include -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/win32-g++ 
+CXXFLAGS      = -pipe -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
+INCPATH       = -I../../QtScreenCaptureProject -I. -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/local/Qt-5.15.3/include -I/usr/x86_64-w64-mingw32/include/opencv4 -I../../qt-everywhere-src-5.15.3/qtbase/include -I../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets -I../../qt-everywhere-src-5.15.3/qtbase/include/QtGui -I../../qt-everywhere-src-5.15.3/qtbase/include/QtCore -Irelease -I. -I/include -I../../qt-everywhere-src-5.15.3/qtbase/mkspecs/win32-g++ 
 LINKER      =        /usr/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        -L/home/ubuntu/QtScreenCaptureProject/opencv/build/lib `pkg-config --libs opencv4` -L/usr/x86_64-w64-mingw32/qt5/lib -lQt5Widgets -lQt5Gui -lQt5Core -L/usr/x86_64-w64-mingw32/lib -lopencv_core -lopencv_imgproc -lopencv_highgui /usr/lib/x86_64-linux-gnu/libQt5Widgets.a /usr/lib/x86_64-linux-gnu/libQt5Gui.a /usr/lib/x86_64-linux-gnu/libQt5Core.a  -lGL -lmingw32 /usr/lib/x86_64-linux-gnu/libqtmain.a 
-QMAKE         = /usr/lib/qt5/bin/qmake
+LIBS        =        -L/home/ubuntu/QtScreenCaptureProject/opencv/build/lib `pkg-config --libs opencv4` -L/usr/local/Qt-5.15.3/lib -lQt5Widgets -lQt5Gui -lQt5Core -L/usr/x86_64-w64-mingw32/lib -lopencv_core -lopencv_imgproc -lopencv_highgui /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libQt5Widgets.a /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libQt5Gui.a /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libQt5Core.a  -lGL -lmingw32 /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libqtmain.a 
+QMAKE         = /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
 MKDIR         = mkdir -p
@@ -30,8 +30,8 @@ COPY_DIR      = cp -f -R
 INSTALL_FILE  = install -m 644 -p
 INSTALL_PROGRAM = install -m 755 -p
 INSTALL_DIR   = cp -f -R
-QINSTALL      = /usr/lib/qt5/bin/qmake -install qinstall
-QINSTALL_PROGRAM = /usr/lib/qt5/bin/qmake -install qinstall -exe
+QINSTALL      = /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/bin/qmake -install qinstall
+QINSTALL_PROGRAM = /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/bin/qmake -install qinstall -exe
 DEL_FILE      = rm -f
 SYMLINK       = ln -f -s
 DEL_DIR       = rmdir
@@ -74,21 +74,22 @@ DESTDIR_TARGET = release/Screencappa.exe
 first: all
 all: Makefile.Release  release/Screencappa.exe
 
-release/Screencappa.exe: /usr/lib/x86_64-linux-gnu/libQt5Widgets.a /usr/lib/x86_64-linux-gnu/libQt5Gui.a /usr/lib/x86_64-linux-gnu/libQt5Core.a /usr/lib/x86_64-linux-gnu/libqtmain.a ui_mainwindow.h $(OBJECTS) 
+release/Screencappa.exe: /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libQt5Widgets.a /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libQt5Gui.a /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libQt5Core.a /home/ubuntu/qt-everywhere-src-5.15.3/qtbase/lib/libqtmain.a ui_mainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
 
 qmake: FORCE
-	@$(QMAKE) -o Makefile.Release ../Screencappa.pro -qtconf /usr/lib/x86_64-linux-gnu/qt5/qt.conf -early QMAKE_CC=x86_64-linux-gnu-gcc QMAKE_CXX=x86_64-linux-gnu-g++ QMAKE_LINK=x86_64-linux-gnu-g++ QMAKE_STRIP=x86_64-linux-gnu-strip QMAKE_QMAKE=/usr/bin/x86_64-linux-gnu-qmake PKG_CONFIG=x86_64-linux-gnu-pkg-config -before -spec win32-g++
+	@$(QMAKE) -o Makefile.Release ../Screencappa.pro -spec win32-g++ CONFIG+=release
 
 qmake_all: FORCE
 
 dist:
-	$(ZIP) Screencappa.zip $(SOURCES) $(DIST) ../../Screencappa.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qdevice.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/device_config.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/sanitize.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/gcc-base.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/angle.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/win32/windows_vulkan_sdk.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/windows-vulkan.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-win32.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/windows-desktop.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_edid_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_egl_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_fb_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_fontdatabase_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_glx_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_theme_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xkbcommon_support_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_functions.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/win32-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf ../.qmake.stash /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/win32/default_pre.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds_post.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/build_pass.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/precompile_header.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources_functions.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/moc.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/win32/opengl.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/uic.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qmake_use.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/file_copies.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/win32/windows.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/testcase_targets.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf ../Screencappa.pro    /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp ../src/screencapture.h ../src/imageprocessor.h  ../src/main.cpp ../src/screencapture.cpp ../src/imageprocessor.cpp ../src/mainwindow.ui    
+	$(ZIP) Screencappa.zip $(SOURCES) $(DIST) ../../Screencappa.pro ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/spec_pre.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/qdevice.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/device_config.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/sanitize.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/gcc-base.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/g++-base.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/angle.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/win32/windows_vulkan_sdk.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/windows-vulkan.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/g++-win32.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/common/windows-desktop.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/qconfig.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_ext_freetype.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_ext_harfbuzz.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_accessibility_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_accessibility_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_bootstrap_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_bootstrap_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_concurrent.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_concurrent_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_concurrent.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_core.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_core_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_core.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_dbus.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_dbus_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_dbus.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_devicediscovery_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_devicediscovery_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_edid_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_edid_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_egl_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_egl_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_eglfsdeviceintegration_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_eventdispatcher_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_fb_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_fb_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_fontdatabase_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_fontdatabase_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_glx_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_glx_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_gui.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_gui_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_gui.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_input_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_input_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_network.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_network_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_network.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_opengl.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_opengl_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_opengl.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_openglextensions.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_openglextensions_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_openglextensions.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_platformcompositor_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_platformcompositor_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_printsupport.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_printsupport_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_printsupport.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_service_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_service_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_sql.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_sql_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_sql.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_testlib.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_testlib_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_testlib.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_theme_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_theme_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_vulkan_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_vulkan_support_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_widgets.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_widgets_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_widgets.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_xml.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_xml_private.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_xml.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qconnmanbearer.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qconnmanbearer.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qeglfs-emu-integration.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qeglfs-emu-integration.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qeglfs.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qeglfs.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qevdevkeyboardplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qevdevkeyboardplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qevdevmouseplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qevdevmouseplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qevdevtabletplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qevdevtabletplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qevdevtouchplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qevdevtouchplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qgenericbearer.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qgenericbearer.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qgif.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qgif.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qico.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qico.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qjpeg.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qjpeg.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qlinuxfb.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qlinuxfb.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qminimal.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qminimal.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qminimalegl.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qminimalegl.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qnmbearer.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qnmbearer.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qoffscreen.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qoffscreen.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qsqlite.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qsqlite.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qtuiotouchplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qtuiotouchplugin.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qvnc.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qvnc.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qxdgdesktopportal.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qxdgdesktopportal.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_moc.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_qdbuscpp2xml.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_qdbusxml2cpp.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_qlalr.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_qvkgen.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_rcc.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_syncqt.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_tracegen.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_tool_uic.pri ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/qt_functions.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/qt_config.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/win32-g++/qmake.conf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/spec_post.prf ../.qmake.stash ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/exclusive_builds.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/toolchain.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/default_pre.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/win32/default_pre.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/resolve_config.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/exclusive_builds_post.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/default_post.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/build_pass.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/precompile_header.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/warn_on.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/qt.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/resources_functions.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/resources.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/moc.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/win32/opengl.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/uic.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/qmake_use.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/file_copies.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/win32/windows.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/testcase_targets.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/exceptions.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/yacc.prf ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/lex.prf ../Screencappa.pro    ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/data/dummy.cpp ../src/screencapture.h ../src/imageprocessor.h  ../src/main.cpp ../src/screencapture.cpp ../src/imageprocessor.cpp ../src/mainwindow.ui    
 
 clean: compiler_clean 
 	-$(DEL_FILE) release/main.o release/screencapture.o release/imageprocessor.o release/moc_screencapture.o release/moc_imageprocessor.o
 
 distclean: clean 
+	-$(DEL_FILE) /home/ubuntu/QtScreenCaptureProject/build-windows/uic_wrapper.sh /home/ubuntu/QtScreenCaptureProject/build-windows/uic_wrapper.sh
 	-$(DEL_FILE) $(DESTDIR_TARGET)
 	-$(DEL_FILE) Makefile.Release
 
@@ -107,21 +108,334 @@ compiler_rcc_clean:
 compiler_moc_predefs_make_all: release/moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) release/moc_predefs.h
-release/moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
-	/usr/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++ -pipe -fno-keep-inline-dllexport -O2 -std=gnu++11 -Wall -Wextra -Wextra -dM -E -o release/moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
+release/moc_predefs.h: ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/data/dummy.cpp
+	/usr/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++ -pipe -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -dM -E -o release/moc_predefs.h ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: release/moc_screencapture.cpp release/moc_imageprocessor.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) release/moc_screencapture.cpp release/moc_imageprocessor.cpp
 release/moc_screencapture.cpp: ../src/screencapture.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QObject \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QPixmap \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/serialization/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qline.h \
 		release/moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ubuntu/QtScreenCaptureProject/build-windows/release/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/win32-g++ -I/home/ubuntu/QtScreenCaptureProject -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/x86_64-w64-mingw32/qt5/include -I/usr/x86_64-w64-mingw32/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/screencapture.h -o release/moc_screencapture.cpp
+		../../qt-everywhere-src-5.15.3/qtbase/bin/moc
+	/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/bin/moc $(DEFINES) --include /home/ubuntu/QtScreenCaptureProject/build-windows/release/moc_predefs.h -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/mkspecs/win32-g++ -I/home/ubuntu/QtScreenCaptureProject -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/local/Qt-5.15.3/include -I/usr/x86_64-w64-mingw32/include/opencv4 -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include/QtWidgets -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include/QtGui -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/screencapture.h -o release/moc_screencapture.cpp
 
 release/moc_imageprocessor.cpp: ../src/imageprocessor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QObject \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QPixmap \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/serialization/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QRect \
 		release/moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/ubuntu/QtScreenCaptureProject/build-windows/release/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/win32-g++ -I/home/ubuntu/QtScreenCaptureProject -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/x86_64-w64-mingw32/qt5/include -I/usr/x86_64-w64-mingw32/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/imageprocessor.h -o release/moc_imageprocessor.cpp
+		../../qt-everywhere-src-5.15.3/qtbase/bin/moc
+	/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/bin/moc $(DEFINES) --include /home/ubuntu/QtScreenCaptureProject/build-windows/release/moc_predefs.h -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/mkspecs/win32-g++ -I/home/ubuntu/QtScreenCaptureProject -I/home/ubuntu/QtScreenCaptureProject/include -I/usr/include/opencv4 -I/usr/local/Qt-5.15.3/include -I/usr/x86_64-w64-mingw32/include/opencv4 -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include/QtWidgets -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include/QtGui -I/home/ubuntu/qt-everywhere-src-5.15.3/qtbase/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/imageprocessor.h -o release/moc_imageprocessor.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -131,8 +445,8 @@ compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../src/mainwindow.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic ../src/mainwindow.ui -o ui_mainwindow.h
+		../../qt-everywhere-src-5.15.3/qtbase/bin/uic
+	/home/ubuntu/QtScreenCaptureProject/build-windows/uic_wrapper.sh ../src/mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -146,13 +460,580 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-release/main.o: ../src/main.cpp 
+release/main.o: ../src/main.cpp ../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/QApplication \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qapplication.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qapplication.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qtwidgetsglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qtwidgetsglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qtwidgets-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/qtwidgets-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcoreapplication.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qcoreapplication.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qeventloop.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qeventloop.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qcursor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qcursor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qdesktopwidget.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qdesktopwidget.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qwidget.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qwidget.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpalette.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qpalette.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qbrush.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qbrush.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/serialization/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qfont.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/text/qfont.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qfontmetrics.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/text/qfontmetrics.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qfontinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/text/qfontinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qsizepolicy.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qsizepolicy.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qkeysequence.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qkeysequence.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvariant.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qvariant.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdebug.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qdebug.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtextstream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/serialization/qtextstream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlocale.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qlocale.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qset.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qset.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontiguouscache.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontiguouscache.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qurl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qurl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qurlquery.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qurlquery.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qfile.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qfile.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qfiledevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qfiledevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qvector2d.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/math3d/qvector2d.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtouchdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qtouchdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qguiapplication.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qguiapplication.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qinputmethod.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qinputmethod.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/QWidget \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QScreen \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qscreen.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qscreen.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QList \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QObject \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QRect \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QSize \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QSizeF \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QTransform \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QPixmap \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QDebug \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/QLabel \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qlabel.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/widgets/qlabel.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qframe.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/widgets/qframe.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/QVBoxLayout \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qboxlayout.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qboxlayout.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qlayout.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qlayout.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qlayoutitem.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qlayoutitem.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qgridlayout.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qgridlayout.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/QShortcut \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtWidgets/qshortcut.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/widgets/kernel/qshortcut.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QKeySequence \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QDir \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdir.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qdir.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qfileinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qfileinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QDateTime \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdatetime.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/time/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/main.o ../src/main.cpp
 
-release/screencapture.o: ../src/screencapture.cpp ../src/screencapture.h
+release/screencapture.o: ../src/screencapture.cpp ../src/screencapture.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QObject \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QPixmap \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/serialization/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qline.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/screencapture.o ../src/screencapture.cpp
 
-release/imageprocessor.o: ../src/imageprocessor.cpp ../src/imageprocessor.h
+release/imageprocessor.o: ../src/imageprocessor.cpp ../src/imageprocessor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QObject \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnamespace.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig-bootstrapped.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qconfig.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/qtcore-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsystemdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qprocessordetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qcompilerdetection.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qtypeinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qsysinfo.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qlogging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qflags.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qbasicatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_bootstrap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qgenericatomic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_cxx11.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qatomic_msvc.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qglobalstatic.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/thread/qmutex.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qnumeric.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/global/qversiontagging.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobjectdefs_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstring.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qchar.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrefcount.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qarraydata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringliteral.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringview.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringbuilder.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qalgorithms.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qiterator.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhashfunctions.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpair.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvector.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainertools_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qpoint.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qbytearraylist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringlist.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qregexp.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/text/qstringmatcher.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qcoreevent.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qscopedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qmetatype.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qvarlengtharray.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qcontainerfwd.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/kernel/qobject_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/QPixmap \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qpixmap.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qtguiglobal.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/qtgui-config.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpaintdevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qwindowdefs_win.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qrect.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qmargins.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsize.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qcolor.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgb.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qrgba64.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qshareddata.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qhash.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qsharedpointer_impl.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/image/qimage.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/kernel/qpixelformat.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qtransform.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qmatrix.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qpolygon.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtGui/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/gui/painting/qregion.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/serialization/qdatastream.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/io/qiodevice.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/src/corelib/tools/qline.h \
+		../../qt-everywhere-src-5.15.3/qtbase/include/QtCore/QRect
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/imageprocessor.o ../src/imageprocessor.cpp
 
 release/moc_screencapture.o: release/moc_screencapture.cpp 

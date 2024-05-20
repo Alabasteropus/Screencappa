@@ -3,7 +3,7 @@
 # This script is for building and packaging the Screencappa application for Windows using MinGW-w64.
 
 # Define the Qt and OpenCV installation paths
-export QT_PATH="/usr/local/Qt-5.15.3" # Updated to the new Qt installation path
+export QT_PATH="/home/ubuntu/qt-everywhere-src-5.15.3/qtbase" # Updated to the new Qt installation path
 export OPENCV_PATH="/usr/include/opencv4"
 
 # Set the environment variables for Qt and OpenCV
@@ -18,15 +18,12 @@ cd build-windows
 # Placeholder for the qmake executable path, to be updated after Qt build completion
 QMAKE_EXECUTABLE=""
 
-# Check for the MinGW-w64 qmake executable in the expected directory
-if [ -f "/usr/local/Qt-5.15.3/bin/qmake" ]; then
-    QMAKE_EXECUTABLE="/usr/local/Qt-5.15.3/bin/qmake"
-elif [ -f "/usr/bin/x86_64-w64-mingw32-qmake" ]; then
-    QMAKE_EXECUTABLE="/usr/bin/x86_64-w64-mingw32-qmake"
-else
-    echo "MinGW-w64 qmake executable not found, please check your Qt installation."
-    exit 1
-fi
+# Wait for the qmake executable to become available
+while [ ! -f "$QT_PATH/bin/qmake" ]; do
+    echo "Waiting for qmake to become available..."
+    sleep 10
+done
+QMAKE_EXECUTABLE="$QT_PATH/bin/qmake"
 
 # Run qmake to generate the Makefile, specifying the cross-platform spec for MinGW-w64
 $QMAKE_EXECUTABLE ../Screencappa.pro -spec win32-g++ CONFIG+=release
