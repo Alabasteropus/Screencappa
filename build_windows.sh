@@ -15,11 +15,20 @@ export PKG_CONFIG_PATH="$OPENCV_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
 mkdir -p build-windows
 cd build-windows
 
-# Run qmake to generate the Makefile, specifying the cross-platform spec for MinGW-w64
-qmake ../Screencappa.pro -spec win32-g++
+# Use the qmake executable found in the system
+QMAKE_EXECUTABLE="/usr/bin/qmake"
 
-# Run make to build the project
-make
+# Check if qmake executable is found
+if [ ! -f "$QMAKE_EXECUTABLE" ]; then
+    echo "qmake executable not found, please check your Qt installation."
+    exit 1
+fi
+
+# Run qmake to generate the Makefile, specifying the cross-platform spec for MinGW-w64
+$QMAKE_EXECUTABLE ../Screencappa.pro -spec win32-g++ CONFIG+=release
+
+# Use the standard make command to build the project
+/usr/bin/make
 
 # Check if the build was successful
 if [ $? -ne 0 ]; then
@@ -29,7 +38,6 @@ fi
 
 # The windeployqt tool is not available on Linux, so it is removed from the script.
 # Instead, manually collect all necessary Qt libraries and plugins for the Windows executable to run.
-# TODO: Identify and copy the necessary Qt libraries and plugins to the build-windows directory.
 
 # Navigate to the directory containing the Windows executable
 cd release # Assuming the executable is in the 'release' directory
@@ -44,7 +52,11 @@ fi
 mkdir -p Screencappa-dist
 cp Screencappa.exe Screencappa-dist/
 
-# TODO: Copy the necessary Qt libraries and plugins to the Screencappa-dist directory
+# Copy the necessary Qt libraries and plugins to the Screencappa-dist directory
+cp -r "$QT_PATH/bin" Screencappa-dist/
+cp -r "$QT_PATH/plugins" Screencappa-dist/
+cp -r "$QT_PATH/qml" Screencappa-dist/
+cp -r "$QT_PATH/lib" Screencappa-dist/
 
 # Create a zip file for distribution
 # Ensure that the Windows executable and all required Qt libraries and plugins are present before zipping
