@@ -118,6 +118,15 @@ Makefile: ../Screencappa.pro ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/featu
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_gui.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_input_support_private.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_input_support_private.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins1.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins1_private.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_mockplugins1.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins2.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins2_private.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_mockplugins2.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins3.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins3_private.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_mockplugins3.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_network.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_network_private.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_network.pri \
@@ -150,6 +159,18 @@ Makefile: ../Screencappa.pro ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/featu
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_xml.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_xml_private.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_xml.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock1plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock1plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock2plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock2plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock3plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock3plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock4plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock4plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock5plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock5plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock6plugin.pri \
+		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock6plugin.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qconnmanbearer.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qconnmanbearer.pri \
 		../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qeglfs-emu-integration.pri \
@@ -277,6 +298,15 @@ Makefile: ../Screencappa.pro ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/featu
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_gui.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_input_support_private.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_input_support_private.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins1.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins1_private.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_mockplugins1.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins2.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins2_private.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_mockplugins2.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins3.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_mockplugins3_private.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_mockplugins3.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_network.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_network_private.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_network.pri:
@@ -309,6 +339,18 @@ Makefile: ../Screencappa.pro ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/featu
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_xml.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_lib_xml_private.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_lib_xml.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock1plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock1plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock2plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock2plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock3plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock3plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock4plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock4plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock5plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock5plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_mock6plugin.pri:
+../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_mock6plugin.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qconnmanbearer.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules/qt_plugin_qconnmanbearer.pri:
 ../../qt-everywhere-src-5.15.3/qtbase/mkspecs/modules-inst/qt_plugin_qeglfs-emu-integration.pri:
