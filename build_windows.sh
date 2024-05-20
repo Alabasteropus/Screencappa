@@ -53,10 +53,16 @@ mkdir -p Screencappa-dist
 cp Screencappa.exe Screencappa-dist/
 
 # Copy the necessary Qt libraries and plugins to the Screencappa-dist directory
-cp -r "$QT_PATH/bin" Screencappa-dist/
-cp -r "$QT_PATH/plugins" Screencappa-dist/
-cp -r "$QT_PATH/qml" Screencappa-dist/
-cp -r "$QT_PATH/lib" Screencappa-dist/
+# Check if the Qt directories exist before copying
+QT_DIRECTORIES=("bin" "plugins" "qml" "lib")
+for dir in "${QT_DIRECTORIES[@]}"; do
+    if [ -d "$QT_PATH/$dir" ]; then
+        cp -r "$QT_PATH/$dir" Screencappa-dist/
+    else
+        echo "Qt $dir directory not found, exiting..."
+        exit 1
+    fi
+done
 
 # Create a zip file for distribution
 # Ensure that the Windows executable and all required Qt libraries and plugins are present before zipping

@@ -11,12 +11,6 @@ Welcome to Screencappa, the dynamic screencapture tool designed for efficiency a
 ### Dependencies
 Before installing Screencappa, ensure the following dependencies are installed:
 
-#### For macOS:
-- Qt: `brew install qt`
-- OpenCV: `brew install opencv`
-- ScreenCaptureKit: `brew install screencapturekit`
-- Quartz: `brew install quartz`
-
 #### For Windows:
 - Qt5: `vcpkg install qt5`
 - OpenCV: `vcpkg install opencv`
@@ -36,6 +30,7 @@ Before installing Screencappa, ensure the following dependencies are installed:
 
 ### Capturing Screenshots
 - To capture a screenshot, press the 'Capture' button on the main interface or use the hotkey `Ctrl+Shift+S`.
+- The default save location for screenshots is the 'Screenshots' directory in your home path. Screenshots are saved with a timestamp for easy organization.
 
 ### Cloning and Cropping
 - Select the area of the screen you wish to clone and use the 'Clone' option to create a duplicate.
@@ -70,6 +65,7 @@ If you encounter any issues during installation or usage, please refer to the fo
 - Ensure all dependencies are correctly installed and up to date.
 - Check if your system's firewall or antivirus software is blocking Screencappa.
 - For graphical issues, ensure your graphics drivers are updated.
+- If you encounter errors related to missing Qt libraries during compilation, verify that the Qt and MinGW-w64 paths are correctly set in your system's PATH and that the versions match the project requirements.
 
 For further assistance, please open an issue on the Screencappa GitHub repository.
 
