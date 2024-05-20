@@ -17,8 +17,8 @@
    ```
 
 ## Installing Dependencies
-1. Install Qt 5.15.3 for Windows from the official Qt website or using the Qt Maintenance Tool if you have it installed.
-2. Ensure MinGW-w64 is installed and properly configured in your system's PATH.
+1. Install Qt 5.15.3 for Windows from the official Qt website. You can download it from [Qt's official download page](https://www.qt.io/download-qt-installer). Follow the instructions provided by the installer.
+2. Ensure MinGW-w64 is installed and properly configured in your system's PATH. You can download it from [MinGW-w64's official page](https://mingw-w64.org/doku.php/download). Follow the installation instructions and add the bin directory to your system's PATH.
 
 ## Compiling the Application
 1. Open the Qt Command Prompt from the Start Menu.
