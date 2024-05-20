@@ -28,7 +28,7 @@ fi
 $QMAKE_EXECUTABLE ../Screencappa.pro -spec win32-g++ CONFIG+=release
 
 # Use the MinGW-w64 make command to build the project
-mingw32-make
+make
 
 # Check if the build was successful
 if [ $? -ne 0 ]; then

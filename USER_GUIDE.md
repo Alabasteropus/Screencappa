@@ -24,7 +24,10 @@ Before installing Screencappa, ensure the following dependencies are installed:
    ```
    cd Screencappa
    ```
-3. Compile the project using Qt Creator or your preferred IDE that supports Qt and C++.
+3. Compile the project using the provided script:
+   ```
+   ./build_windows.sh
+   ```
 
 ## Using Screencappa
 
